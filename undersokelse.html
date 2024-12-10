@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stressfri Livsstil - Undersøkelse</title>
+    <style>
+        /* Grunnleggende styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background-color: #0288d1;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        header h1 {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 2.5em;
+        }
+
+        /* Navigasjonsmeny */
+        nav {
+            background-color: #03a9f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1em;
+            position: relative;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1em;
+            transition: max-height 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5em;
+        }
+
+        /* Menyknapp */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2em;
+            position: absolute;
+            top: 50%;
+            right: 1em;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Mobiltilpasning for meny */
+        @media (max-width: 768px) {
+            nav {
+                justify-content: flex-start;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #03a9f4;
+                padding: 0.5em 0;
+                z-index: 5;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        /* Styling for chatboten */
+        .chatbot-section {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+        }
+
+        .chat-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        .chatbox {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            background-color: #0288d1;
+            color: white;
+        }
+
+        .user-message {
+            background-color: #f1f1f1;
+            color: black;
+            align-self: flex-end;
+        }
+
+        .user-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        .send-btn {
+            background-color: #0288d1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .send-btn:hover {
+            background-color: #026aa7;
+        }
+
+        /* Responsivitet for mobil */
+        @media (max-width: 768px) {
+            .chat-container {
+                padding: 15px;
+            }
+
+            .chatbox {
+                max-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Velkommen til Stressfri Livsstil</h1>
+        <p>Din guide til å redusere stress og finne ro</p>
+    </header>
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Hjem</a>
+            <a href="meditasjon.html">Meditasjon</a>
+            <a href="pusteteknikker.html">Pusteteknikker</a>
+            <a href="avslappende-videoer.html">Avslappende Videoer</a>
+            <a href="avslappende-lyder.html">Avslappende Lyder</a>
+            <a href="undersokelse.html">Undersøkelse</a>
+        </div>
+        <button class="nav-toggle">☰</button>
+    </nav>
+    
+    <section class="chatbot-section">
+        <div class="chat-container">
+            <div class="chatbox" id="chatbox">
+                <div class="message bot-message">Hei! Hvordan føler du deg i dag? På en skala fra 1 til 10, hvor stresset føler du deg?</div>
+            </div>
+            <input type="text" id="userInput" placeholder="Skriv her..." class="user-input">
+            <button id="sendBtn" class="send-btn">Send</button>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2024 Stressfri Livsstil</p>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+    });
+});
+
+
+        const chatbox = document.getElementById('chatbox');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        sendBtn.addEventListener('click', async () => {
+            const userMessage = userInput.value.trim();
+            if (userMessage !== "") {
+                addUserMessage(userMessage);
+                const response = await getBotResponse(userMessage);
+                addBotResponse(response);
+            }
+            userInput.value = ''; // Clear input field
+        });
+
+        function addUserMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'user-message');
+            messageDiv.innerText = message;
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function addBotResponse(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'bot-message');
+            messageDiv.innerText = message;
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        // Her er en funksjon som gir en anbefaling basert på stressnivået
+        async function getBotResponse(userMessage) {
+            const stressLevel = parseInt(userMessage);
+
+            let responseMessage = "";
+            if (!isNaN(stressLevel)) {
+                if (stressLevel >= 8) {
+                    responseMessage = "Det høres ut som om du er veldig stresset. Jeg anbefaler at du prøver meditasjon eller pusteteknikker. Du kan se meditasjonsvideoene våre for å hjelpe deg med å roe ned.";
+                } else if (stressLevel >= 5) {
+                    responseMessage = "Du kan prøve noen yogaøvelser for å redusere stresset. Yoga kan hjelpe med å slappe av både kropp og sinn.";
+                } else {
+                    responseMessage = "Det virker som du har det ganske bra, men det kan fortsatt være nyttig å lytte til avslappende lyder. Dette kan bidra til å opprettholde roen.";
+                }
+            } else {
+                responseMessage = "Jeg forstår ikke helt. Kan du vennligst angi et tall fra 1 til 10 for å beskrive hvordan du føler deg?";
+            }
+            return responseMessage;
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stressfri Livsstil</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header>
+        <h1>Velkommen til Stressfri Livsstil</h1>
+        <p>Din guide til å redusere stress og finne ro</p>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Hjem</a>
+            <a href="meditasjon.html">Meditasjon</a>
+            <a href="pusteteknikker.html">Pusteteknikker</a>
+            <a href="avslappende-videoer.html">Avslappende Videoer</a>
+            <a href="avslappende-lyder.html">Avslappende Lyder</a>
+            <a href="undersokelse.html">Undersøkelse</a>
+        </div>
+        <button class="nav-toggle">☰</button>
+    </nav>
+    <div class="exercise-container">
+        <!-- Pusteteknikk 1: 4-7-8 -->
+        <div class="exercise">
+            <h3>4-7-8 Pusteteknikk</h3>
+            <p>Den berømte 4-7-8 pusteteknikken hjelper med å roe ned kroppen og sinnet. Øvelsen består av å puste inn i 4 sekunder, holde pusten i 7 sekunder, og puste ut i 8 sekunder.</p>
+            <button onclick="startPusteteknikk(4, 7, 8, 'timer-four-seven-eight')">Start Øvelse</button>
+            <div id="timer-four-seven-eight" class="timer">Tid igjen: 0 sekunder</div>
+        </div>
+
+        <!-- Pusteteknikk 2: Navy Seals -->
+        <div class="exercise">
+            <h3>Navy Seals Pusteteknikk</h3>
+            <p>En pusteteknikk som Navy Seals bruker for å roe ned kroppen og oppnå klarhet under stress. Øvelsen består av 4 sekunder innpust, 4 sekunder holde, og 4 sekunder utpust.</p>
+            <button onclick="startPusteteknikk(4, 4, 4, 'timer-navy-seals')">Start Øvelse</button>
+            <div id="timer-navy-seals" class="timer">Tid igjen: 0 sekunder</div>
+        </div>
+
+        <!-- Pusteteknikk 3: Belly Breathing -->
+        <div class="exercise">
+            <h3>Belly Breathing</h3>
+            <p>Belly Breathing hjelper med å roe ned nervesystemet og redusere angst. Øvelsen består av 5 sekunder innpust, 5 sekunder hold, og 5 sekunder utpust.</p>
+            <button onclick="startPusteteknikk(5, 5, 5, 'timer-belly-breathing')">Start Øvelse</button>
+            <div id="timer-belly-breathing" class="timer">Tid igjen: 0 sekunder</div>
+        </div>
+
+        <!-- Pusteteknikk 4: Alternate Nostril Breathing -->
+        <div class="exercise">
+            <h3>Alternate Nostril Breathing</h3>
+            <p>Øvelsen går ut på å puste gjennom det ene neseboret og deretter det andre. Den bidrar til å balansere kroppens energier og roe ned hjernen.</p>
+            <button onclick="startPusteteknikk(4, 4, 4, 'timer-alternate-nostril')">Start Øvelse</button>
+            <div id="timer-alternate-nostril" class="timer">Tid igjen: 0 sekunder</div>
+        </div>
+
+        <!-- Pusteteknikk 5: Navy Seals Breathing -->
+        <div class="exercise">
+            <h3>Box Breathing</h3>
+            <p>Box Breathing er en pusteteknikk lignende som Navy Seals bruker under stress. Øvelsen består av 4 sekunder innpust, 4 sekunder hold, og 4 sekunder utpust, men forskjellen er at rett etter utpust må denne gjentas 8 ganger</p>
+            <button onclick="startPusteteknikk(4, 4, 4, 'timer-box-breathing')">Start Øvelse</button>
+            <div id="timer-box-breathing" class="timer">Tid igjen: 0 sekunder</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Stressfri Livsstil</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+    });
+});
+
+        function startPusteteknikk(inSeconds, holdSeconds, outSeconds, timerId) {
+            const timerElement = document.getElementById(timerId);
+            let phase = 0;
+            let secondsLeft;
+            let intervalTime = 1000;
+
+            const phases = [
+                { name: "Innånding", duration: inSeconds },
+                { name: "Hold Pusten", duration: holdSeconds },
+                { name: "Utånding", duration: outSeconds },
+            ];
+
+            let currentPhase = phases[phase];
+            secondsLeft = currentPhase.duration;
+
+            timerElement.innerHTML = `${currentPhase.name}: ${secondsLeft} sekunder`;
+
+            const timer = setInterval(function () {
+                secondsLeft--;
+                if (secondsLeft <= 0) {
+                    phase++;
+                    if (phase >= phases.length) {
+                        clearInterval(timer);
+                        timerElement.innerHTML = 'Øvelsen er ferdig!';
+                        return;
+                    }
+
+                    currentPhase = phases[phase];
+                    secondsLeft = currentPhase.duration;
+                }
+
+                timerElement.innerHTML = `${currentPhase.name}: ${secondsLeft} sekunder`;
+            }, intervalTime);
+        }
+
+        // Mobile menu toggle script
+        const navToggleButton = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        navToggleButton.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
